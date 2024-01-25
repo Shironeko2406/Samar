@@ -1,5 +1,5 @@
 // Phần 1: Sử dụng jQuery để kích hoạt plugin "counterUp" cho phần tử có lớp là "counter"
-$(document).ready(function(){
+$(document).ready(function () {
     $(".counter").counterUp({
         delay: 10,
         time: 3000
@@ -9,17 +9,19 @@ $(document).ready(function(){
 
 // Phần 2: Xử lý hiển thị và ẩn nút "back-to-top" khi cuộn, và cuộn mềm mại lên đầu trang khi nút được nhấp
 document.addEventListener("DOMContentLoaded", function () {
-    var backToTopButton = document.querySelector('.backToTop');
+    var backButton = document.querySelector('.backToTop');
 
     window.addEventListener('scroll', function () {
-        if (window.scrollY > 100) {
-            backToTopButton.classList.add('cd-top--is-visible');
+        var scrollPercentage = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100;
+
+        if (scrollPercentage > 6.25) { // Khoảng 6.25% tương ứng với 1/16 trang
+            backButton.classList.add('cd-top--is-visible');
         } else {
-            backToTopButton.classList.remove('cd-top--is-visible');
+            backButton.classList.remove('cd-top--is-visible');
         }
     });
 
-    backToTopButton.addEventListener('click', function (event) {
+    backButton.addEventListener('click', function (event) {
         event.preventDefault();
         smoothScrollToTop();
     });
@@ -28,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var currentPosition = window.scrollY;
         var targetPosition = 0;
         var distance = targetPosition - currentPosition;
-        var duration = 1000; // Adjust the duration as needed
+        var duration = 1000; // Điều chỉnh thời gian cuộn trang
 
         var start = null;
 
@@ -47,10 +49,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function easeInOutCubic(t, b, c, d) {
-        // cubic easing in/out - acceleration until halfway, then deceleration
+        // Hàm deu dần cubic - tăng tốc độ đến giữa, sau đó giảm tốc độ
         t /= d / 2;
         if (t < 1) return c / 2 * t * t * t + b;
         t -= 2;
         return c / 2 * (t * t * t + 2) + b;
     }
 });
+
+
